@@ -1,1 +1,7 @@
-This is a project to experience Maven, git and Hadoop mapreduce
+hadoop jar /usr/lib/hadoop-0.20-mapreduce/hadoop-examples.jar wordcount /wordcount/input /wordcount/output
+
+https://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html
+http://www.eng.lsu.edu/mirrors/apache/hadoop/common/stable/
+
+mvn archetype:generate
+
