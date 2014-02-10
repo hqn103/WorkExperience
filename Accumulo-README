@@ -1,0 +1,22 @@
+Linux command to convert time stamp
+
+$ date +%s will output current timestamp
+$ date -d @1391784873 will return date NOTE input is 10 digit number
+
+TO SET filter to display records that needs to be deleted
+
+root@dpdev Test> setiter -t Test -n myfilter -ageoff -p 10 -scan
+AgeOffFilter removes entries with timestamps more than <ttl> milliseconds old
+----------> set AgeOffFilter parameter negate, default false keeps k/v that pass accept method, true rejects k/v that pass accept method: 
+----------> set AgeOffFilter parameter ttl, time to live (milliseconds): 1000
+----------> set AgeOffFilter parameter currentTime, if set, use the given value as the absolute time in milliseconds as the current time of day: 1391782206338
+
+IMPORTANT current time of day has to be current time of future time.  If set to past time, result is unpredicted.  Insert a record, check time stamp and set that time stamp to "current time of day".  Need this so time window won't move.
+
+root@dpdev Test> scan -st   //make sure to verify and those recored display will be delete with deletemany -f command
+
+TO REMOVE filter
+root@dpdev Test> deleteiter -t Test -n myfilter  //delete filter name "myfilter" for table Test
+
+TO UPDATE value filter
+root@dpdev Test> config -t Test -s table.iterator.scan.myfilter.opt.ttl=5000   //set ttl 5seconds
