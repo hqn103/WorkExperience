@@ -46,25 +46,26 @@ public class ModelGenerate {
     	try {
     	    Document document = builder.parse(new FileInputStream("/home/hnguyen/reddisk/standard-models/src/test/resources/data/cidne/raw/cidnehumintahr0.xml"));
     	    Node root = document.getFirstChild();
-    	    printTerm(root.getNodeName());
-    	   
+    	    String rootName = uniqueName(root.getNodeName(), root.getNodeName());
+//    	    printTerm(rootName);
+    	    
     	    NodeList childs = root.getChildNodes();
     	    if (childs.getLength() > 0) {
     	    	for (int i=0; i<childs.getLength(); i++) {
     	    		if (childs.item(i).getNodeType() == 1) {
-    	    			String term = childs.item(i).getNodeName();
+    	    			String term = uniqueName(childs.item(i).getNodeName(), rootName);
     	    			printArtifact(term, "/" + root.getNodeName() + "/" + childs.item(i).getNodeName());
-    	    			printTerm(term);
-    	    			printStatement(root.getNodeName(), term);
+//    	    			printTerm(term);
+//    	    			printStatement(rootName, term);
         	    		
         	    		if (childs.item(i).getChildNodes().getLength() > 0) {
         	    			NodeList grandChilds = childs.item(i).getChildNodes();
         	    			for (int j=0; j<grandChilds.getLength(); j++) {
         	    				if (grandChilds.item(j).getNodeType() == 1) {
-        	    					String innerTerm = grandChilds.item(j).getNodeName();
+        	    					String innerTerm = uniqueName(grandChilds.item(j).getNodeName(), term);
         	    					printArtifact(innerTerm, "/" + root.getNodeName() + "/" + childs.item(i).getNodeName() + "/" + grandChilds.item(j).getNodeName());
-        	    					printTerm(innerTerm);
-        	    					printStatement(term, innerTerm);        	    		
+//        	    					printTerm(innerTerm);
+//        	    					printStatement(term, innerTerm);        	    		
         	    				}
         	    			}
         	    		}
@@ -79,25 +80,26 @@ public class ModelGenerate {
     }
     
     private void printTerm(String term) {
-    	System.out.println("Term ---- <term handle=\"" + term + "\"><concept label=\"" + term + "\" model=\"CIDNE\" /></term>");
+    	System.out.println("<term handle=\"" + term + "\"><concept label=\"" + term + "\" model=\"CIDNE\" /></term>");
     }
     
     private void printStatement(String subject, String object) {
-    	System.out.println("Statement ---- <statement handle=\"has-" + object + "\"><subject handle=\"" + subject + "\" /><predicate label=\"hasValue\" model=\"urn:mil.army.inscom.ucd\" /><object handle=\"" + object + "\" multiplicity=\"each\" /></statement>");
+    	System.out.println("<statement handle=\"has-" + object + "\"><subject handle=\"" + subject + "\" /><predicate label=\"hasValue\" model=\"urn:mil.army.inscom.ucd\" /><object handle=\"" + object + "\" multiplicity=\"each\" /></statement>");
     }
     
     private void printArtifact(String term, String xpath) {
-    	System.out.println("Artifact ---- <term handle=\"" + term + "\"><primitive eval=\"xpath\" type=\"string\" required=\"false\">" + xpath + "</primitive></term>");
+    	System.out.println("<term handle=\"" + term + "\"><primitive eval=\"xpath\" type=\"string\" required=\"false\">" + xpath + "</primitive></term>");
     }
     
     private String uniqueName(String term, String parentTerm) {
     	String newName = term;
     	if (uniqueTerms.containsKey(term)) {
-    		uniqueTerms.put(parentTerm + "//" + term, parentTerm + "//" + term);
-    		newName = parentTerm + "//" + term;
+    		uniqueTerms.put(parentTerm + term, parentTerm + term);
+    		newName = parentTerm + term;
     	} else {
     		uniqueTerms.put(term, term);
     	}
+//    	System.out.println(newName + "\n");
     	return newName;
     }
    
