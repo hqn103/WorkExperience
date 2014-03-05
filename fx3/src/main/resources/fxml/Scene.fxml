@@ -8,6 +8,9 @@
 <AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inscom.FXMLController">
     <children>
         <Button fx:id="button" layoutX="228.0" layoutY="26.0" onAction="#handleButtonAction" text="Click Me!" />
-        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" /><Circle fill="DODGERBLUE" layoutX="62.0" layoutY="53.0" onDragDetected="#dragCircle" radius="15.0" stroke="BLACK" strokeType="INSIDE" /><Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="139.0" layoutY="124.0" stroke="BLACK" strokeType="INSIDE" width="30.0" /><Line endX="100.0" layoutX="195.0" layoutY="77.0" startX="-100.0" />
+        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+        <Circle fx:id="sourceCircle" fill="DODGERBLUE" layoutX="62.0" layoutY="53.0" onDragDetected="#handleDragDetected" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
+        <Rectangle fx:id="targetRectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="139.0" layoutY="124.0" onDragOver="#handleDragOver" onDragEntered="#handleDragEntered" onDragExited="#handleDragExited" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+        <Line endX="100.0" layoutX="195.0" layoutY="77.0" startX="-100.0" />
     </children>
 </AnchorPane>
